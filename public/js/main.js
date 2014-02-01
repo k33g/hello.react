@@ -1,19 +1,18 @@
-/** @jsx React.DOM */
+requirejs.config({
+	baseUrl : "js/",
+	paths   : {
+		"jquery"        : "vendors/jquery.min",
+		"jsx"           : "vendors/jsx",
+		"JSXTransformer": "vendors/JSXTransformer",
+		"react"         : "vendors/react.min"
+	}
+});
 
-var messageTitle = "Hello World! Hello React!";
-var version = "1.0";
+require([
+	'jsx!application/Application'
+], function (Application) {
 
-React.renderComponent(
-	<HelloTitle message={messageTitle} version={version}/>,
-	document.querySelector('hello-title')
-);
+	Application.initialize()
 
-React.renderComponent(
-	<HelloBuddies pollInterval={1000}/>,
-	document.querySelector('hello-buddies')
-);
+});
 
-React.renderComponent(
-	<HelloBuddyForm/>,
-	document.querySelector('hello-buddy-form')
-);

@@ -1,56 +1,57 @@
 /** @jsx React.DOM */
+define(["react","jquery"], function (React, $) {
+	var HelloBuddyForm = React.createClass({
 
-var HelloBuddyForm = React.createClass({
+		getInitialState: function() {
+			return {data : [], message : ""};
+		},
 
-	getInitialState: function() {
-		return {data : [], message : ""};
-	},
+		handleSubmit : function() {
 
-	handleSubmit : function() {
+			var name = this.refs.name.getDOMNode().value.trim();
 
-		var name = this.refs.name.getDOMNode().value.trim();
+			if (!name) {return false;}
 
-		if (!name) {return false;}
+			this.setState({
+				message : "Please wait ..."
+			});
 
-		this.setState({
-			message : "Please wait ..."
-		});
+			$.ajax({
+				type: "POST",
+				url: "buddies",
+				data: {name : name},
+				dataType: "json",
+				success: function(buddy){
+					this.setState({
+						message : buddy.id + " added!"
+					});
 
-		$.ajax({
-			type: "POST",
-			url: "buddies",
-			data: {name : name},
-			dataType: "json",
-			success: function(buddy){
-				this.setState({
-					message : buddy.id + " added!"
-				});
+					this.refs.name.getDOMNode().value = '';
+					this.refs.name.getDOMNode().focus();
 
-				this.refs.name.getDOMNode().value = '';
-				this.refs.name.getDOMNode().focus();
+				}.bind(this)
+			});
 
-			}.bind(this)
-		});
-
-		return false;
-	},
+			return false;
+		},
 
 
-	render: function() {
+		render: function() {
 
-		return (
-			<div>
-				<h2>Buddy Form</h2>
-				<form onSubmit={this.handleSubmit}>
-					<input type="text" placeholder="name" ref="name"/>
+			return (
+				<div>
+					<h2>Buddy Form</h2>
+					<form onSubmit={this.handleSubmit}>
+						<input type="text" placeholder="name" ref="name"/>
 
-					<input type="submit" value="Add Buddy" />
-					<br></br>
-					<strong>{this.state.message}</strong>
-				</form>
-			</div>
-			);
-	}
+						<input type="submit" value="Add Buddy" />
+						<br></br>
+						<strong>{this.state.message}</strong>
+					</form>
+				</div>
+				);
+		}
+	});
+	return HelloBuddyForm;
 });
-
 
