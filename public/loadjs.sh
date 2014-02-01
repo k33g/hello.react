@@ -13,7 +13,6 @@ pulldown jquery -o js/vendors
 #   http://facebook.github.io/react
 # ===================================
 pulldown "http://cdnjs.cloudflare.com/ajax/libs/react/0.8.0/JSXTransformer.js" -o js/vendors
-pulldown "http://cdnjs.cloudflare.com/ajax/libs/react/0.8.0/react-with-addons.min.js" -o js/vendors
 pulldown "http://cdnjs.cloudflare.com/ajax/libs/react/0.8.0/react.min.js" -o js/vendors
 
 # === Skeleton ======================
